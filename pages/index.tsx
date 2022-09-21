@@ -1,12 +1,10 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
-import Navbar from '../components/Navbar'
+
 
 
 const Home: NextPage = () => {
   return (
    <>
-   <Navbar />
 <div className="px-4">
       <div className="mx-auto max-w-md sm:max-w-7xl">
         <h1 className="text-center text-3xl  textstyle">
@@ -19,6 +17,7 @@ const Home: NextPage = () => {
        
            </div>
            </div>
+        
    </>
   )
 }

@@ -14,18 +14,19 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center space-x-2 sm:space-x-6">
-            
-  
+        <Link href="/post/create">
             <a className="hover:text-primary-100">
               <span className="hidden sm:inline text-white textstyle">Create Post</span>
             </a>
+            </Link>
 
-
+            <Link href="/signin">
                   <a className="group">
-                    <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:text-primary-100  textstyle text-white  sm:space-x-3 sm:px-3">
+                    <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3">
                       Sign In
                     </div>
                   </a>
+                  </Link>
                 <div className="relative flex items-center space-x-2 rounded-lg py-1 px-2 dark:bg-gray-700 sm:space-x-3 sm:px-3">
                   <div>
                       <p className="font-extrabold dark:text-white">
