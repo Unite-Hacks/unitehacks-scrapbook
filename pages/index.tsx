@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <h1 className="text-center text-3xl  textstyle">
           Unite Hacks Scrapbook
         </h1>
-        <h2 className="mb-8 text-center text-[20px] text-white textsmallstyle ">
+        <h2 className="mb-5 text-center text-[20px] text-white textsmallstyle ">
           Check out what everyone&apos;s working on and creating at Unite
           Hacks!
         </h2>
