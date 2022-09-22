@@ -1,8 +1,8 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
-export default NextAuth({
+export const authOptions: NextAuthOptions ={
   secret: process.env.UNITEAUTH_SECRET,
   providers: [
   
@@ -18,4 +18,6 @@ export default NextAuth({
     }),
   ],
 
-})
+}
+
+export default NextAuth(authOptions);
