@@ -1,4 +1,6 @@
 import React from "react";
+import { getSession } from "next-auth/react";
+import { redirectIfUnauthenticated } from "../../middleware/unfiltered";
 
 const create = () => {
   return (
@@ -39,53 +41,51 @@ const create = () => {
                 <input
                   id="contributors"
                   type="text"
-               
                   placeholder="Type a username here, then press enter."
                   className="w-full rounded-lg border-2 py-1 pl-4 pr-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:border-primary-200 dark:bg-gray-800"
                 />
               </div>
-             
             </div>
 
             <input
-            name="image"
-            type="file"
-            className="mx-auto block w-full"
-            // accept="image/*, video*/"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-          />
-         
-          <div className="flex flex-wrap gap-4">
-           
-             
-                <div  className="relative">
-                  <button
-                    className="group absolute top-0 right-0 flex h-6 w-6 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100/40 duration-200 hover:bg-primary-200 hover:duration-100"
-                    type="button"
-                  >
-                    <div className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
-                  </button>
-                  <img className="w-32"   />
-                </div>
-           
-          </div>
-          <button
-            type="button"
-          
-            className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
-          
-          >
-            Submit
-          </button>
-        </div>
+              name="image"
+              type="file"
+              className="mx-auto block w-full"
+              // accept="image/*, video*/"
+              accept="image/png, image/jpeg, image/jpg"
+              multiple
+            />
+
+            <div className="flex flex-wrap gap-4">
+              <div className="relative">
+                <button
+                  className="group absolute top-0 right-0 flex h-6 w-6 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100/40 duration-200 hover:bg-primary-200 hover:duration-100"
+                  type="button"
+                >
+                  <div className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
+                </button>
+                <img className="w-32" />
+              </div>
             </div>
+            <button
+              type="button"
+              className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
+            >
+              Submit
+            </button>
           </div>
-          <div>
         </div>
       </div>
-   
+      <div></div>
+    </div>
   );
 };
 
 export default create;
+
+
+// I use this in all my page components where I want to authenticate.
+export async function getServerSideProps(context: any) {
+  const { res } = context;
+  res.writeHead(301, { Location: '/' })
+}
