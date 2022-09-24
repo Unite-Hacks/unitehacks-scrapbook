@@ -44,7 +44,7 @@ const create = () => {
                     id="contributors"
                     type="text"
                     placeholder="Type a username here, then press enter."
-                    className="w-full rounded-lg border-2 py-1 pl-4 pr-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:border-primary-200 dark:bg-gray-800"
+                    className="w-full rounded-lg py-1 pl-4 pr-2"
                   />
                 </div>
               </div>
