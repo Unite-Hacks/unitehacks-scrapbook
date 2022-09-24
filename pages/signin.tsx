@@ -1,4 +1,5 @@
 import React from "react";
+import { GetServerSideProps } from "next";
  import { SiGoogle, SiGithub } from "react-icons/si";
  import { unstable_getServerSession } from "next-auth";
  import { authOptions } from "./api/auth/[...nextauth]";
@@ -44,3 +45,18 @@ const SignIn = () => {
  };
 
  export default SignIn;
+
+ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
