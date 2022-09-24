@@ -79,8 +79,8 @@ const create = () => {
           </div>
         </div>
       ) : (
-        <div>
-          You are not signed in
+        <div className="text-center text-2xl textstyle items-center">
+          Please <a className="text-blue-700" href="/signin">sign</a> in to post.
         </div>
       )}
     </div>
