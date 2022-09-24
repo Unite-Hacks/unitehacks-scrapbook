@@ -24,36 +24,7 @@ const Navbar = () => {
           </Link>
           {!session ? (
             <Link href="/signin">
-<<<<<<< HEAD
-                  <a className="group">
-                    <div className="relative flex items-center bg-white space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-[#72BA58]  sm:space-x-3 sm:px-3">
-                      Sign In
-                    </div>
-                  </a>
-                  </Link>
-                <div className="relative flex items-center space-x-2 rounded-lg py-1 px-2 dark:bg-gray-700 sm:space-x-3 sm:px-3">
-                  <div>
-                      <p className="font-extrabold dark:text-white">
-                      </p>
-                    <p className="text-xs font-bold">
-                    </p>
-                  </div>
 
-                  <button
-                    className="peer"
-                    type="button"
-                  >
-                  </button>
-                  <div className="absolute -bottom-4 right-0 rounded px-2 py-0.5 text-sm opacity-0 duration-200 peer-hover:opacity-100 peer-hover:duration-150 dark:bg-primary-500/50">
-                    Sign Out
-                  </div>
-=======
-              <a className="group">
-                <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3">
-                  Sign In
->>>>>>> 41f4dba170d357bae5fd7c9d58c3dfe03dc3a609
-                </div>
-              </a>
             </Link>
           ) : (
             <Link href="/signout">
