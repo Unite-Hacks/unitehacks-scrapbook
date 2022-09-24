@@ -22,7 +22,7 @@ const Navbar = () => {
 
             <Link href="/signin">
                   <a className="group">
-                    <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3">
+                    <div className="relative flex items-center bg-white space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-[#72BA58]  sm:space-x-3 sm:px-3">
                       Sign In
                     </div>
                   </a>
