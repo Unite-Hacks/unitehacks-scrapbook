@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from "next/link";
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -31,13 +31,18 @@ const Navbar = () => {
               </a>
             </Link>
           ) : (
-            <Link href="/signout">
+            
               <a className="group">
-                <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3">
+                <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3"
+                 onClick={(e) => {
+                  e.preventDefault();
+                  signOut();
+                }}
+                >
                   Sign Out
                 </div>
               </a>
-            </Link>
+           
           )}
         </div>
       </nav>
