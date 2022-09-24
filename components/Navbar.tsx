@@ -33,7 +33,7 @@ const Navbar = () => {
           ) : (
             
               <a className="group">
-                <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3"
+                <div className="relative flex items-center bg-blue-700 space-x-2 rounded-lg py-1 px-2 group-hover:bg-[#ADD8E6]  textstyle text-white  sm:space-x-3 sm:px-3 cursor-pointer"
                  onClick={(e) => {
                   e.preventDefault();
                   signOut();
