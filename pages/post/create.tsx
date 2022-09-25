@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { BsUpload } from 'react-icons/bs';
 import { useDropzone, FileRejection, DropEvent, Accept } from 'react-dropzone';
 
-export const Create = ({
+const Create = () => ({
   onDrop,
   accept,
 }: {
@@ -122,3 +122,4 @@ export const Create = ({
 };
 
 
+export default Create;
