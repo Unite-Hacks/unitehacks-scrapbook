@@ -1,7 +1,28 @@
 import React from "react";
 import { useSession } from "next-auth/react";
+import { BsUpload } from 'react-icons/bs';
+import { useDropzone, FileRejection, DropEvent, Accept } from 'react-dropzone';
 
-const create = () => {
+export const Dropzone = ({
+  onDrop,
+  accept,
+}: {
+  onDrop:
+    | (<T extends File>(
+        acceptedFiles: T[],
+        fileRejections: FileRejection[],
+        event: DropEvent
+      ) => void)
+    | undefined;
+  accept: string;
+}): JSX.Element => {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+  });
+
+
+
+  
   const { data: session }: any = useSession();
 
   return (
@@ -49,14 +70,27 @@ const create = () => {
                 </div>
               </div>
 
-              <input
-                name="image"
-                type="file"
-                className="mx-auto block w-full"
-                // accept="image/*, video*/"
-                accept="image/png, image/jpeg, image/jpg"
-                multiple
-              />
+              <div
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      {...getRootProps({
+        className:
+          'relative w-2/3 lg:w-1/2 h-72 border border-neutral-400 border-dashed rounded-md flex items-center justify-center cursor-pointer',
+      })}
+    >
+      <input
+        type="file"
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...getInputProps({ className: 'w-full h-full opacity-0 z-[100]', accept })}
+      />
+      <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
+        <BsUpload className="text-5xl opacity-60" />
+        <p className="text-xl lg:text-2xl opacity-60 w-4/5">
+          {isDragActive
+            ? 'release to drop the files here'
+            : 'drag and drop or click to upload your photo file here'}
+        </p>
+      </div>
+    </div>
 
               <div className="flex flex-wrap gap-4">
                 <div className="relative">
@@ -73,7 +107,7 @@ const create = () => {
                 type="button"
                 className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
               >
-                Submit
+                Post
               </button>
             </div>
           </div>
@@ -87,4 +121,4 @@ const create = () => {
   );
 };
 
-export default create;
+
