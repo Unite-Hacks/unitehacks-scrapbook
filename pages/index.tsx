@@ -1,6 +1,17 @@
-import type { NextPage } from "next";
+//import type { NextPage } from "next";
+import { ProjectCard } from "../components/PostCard";
+import prisma from "../lib/prisma";
+import { File, Project, User } from "@prisma/client";
+import { PostGrid } from "../components/PostGrid";
+import Link from "next/link";
 
-const Home: NextPage = () => {
+
+export type ProjectCardType = Project & {
+  contributors: User[];
+  files: File[];
+};
+
+export default function Home({ projects }: { projects: ProjectCardType[] }) {
   return (
     <>
       <div className="px-4">
@@ -12,10 +23,48 @@ const Home: NextPage = () => {
             Check out what everyone&apos;s working on and creating at Unite
             Hacks!
           </h2>
+          {projects.length === 0 ? (
+          <p className="mt-4 text-center text-xl">
+            No posts yet. Why don&apos;t you{" "}
+            <Link href="/post/create">
+              <a className="dark:text-primary-200 dark:hover:text-primary-300">
+                create your own
+              </a>
+            </Link>
+            ?
+          </p>
+        ) : (
+          <PostGrid>
+            {projects.map((project) => {
+              return <ProjectCard key={project.id} project={project} />;
+            })}
+          </PostGrid>
+        )}
         </div>
       </div>
     </>
   );
 };
 
-export default Home;
+export async function getServerSideProps() {
+  let projects = await prisma.project.findMany({
+    include: {
+      contributors: {
+        select: {
+          name: true,
+          username: true,
+          avatar: true,
+          id: true,
+        },
+      },
+      files: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return {
+    props: { projects }, // will be passed to the page component as props
+  };
+}
