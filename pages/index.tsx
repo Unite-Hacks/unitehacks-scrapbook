@@ -24,10 +24,10 @@ export default function Home({ projects }: { projects: ProjectCardType[] }) {
             Hacks!
           </h2>
           {projects.length === 0 ? (
-          <p className="mt-4 text-center text-xl">
+          <p className="mt-5 text-center text-xl text-white">
             No posts yet. Why don&apos;t you{" "}
             <Link href="/post/create">
-              <a className="dark:text-primary-200 dark:hover:text-primary-300">
+              <a className="text-blue-700 hover:text-[#ADD8E6]">
                 create your own
               </a>
             </Link>
