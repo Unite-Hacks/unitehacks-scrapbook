@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-import { BsUpload } from 'react-icons/bs';
-import { useDropzone, FileRejection, DropEvent, Accept } from 'react-dropzone';
-
+import { BsUpload } from "react-icons/bs";
+import { useDropzone, FileRejection, DropEvent, Accept } from "react-dropzone";
 
 export const Create = ({
   onDrop,
@@ -20,11 +19,25 @@ export const Create = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
+  // const [data, setData] = useState({
+  // title: "",
+  // contributors: "",
+  // etc according to your preference
+  // })
 
-
-
-  
   const { data: session }: any = useSession();
+
+  const handleSubmit = () => {
+    //TODO axios.post('/api/create', {
+    //  !req.body?.title ||
+    // !req.body?.description ||
+    // !req.body?.contributors ||
+    // !req.body?.files 
+    //})
+    //These fields are required. You can edit the api/create.ts to change field according to yourself
+    //Repeat same steps for delete and edit stuff 
+    console.log('yeah')
+  }
 
   return (
     <div className="px-4 pb-8">
@@ -49,8 +62,7 @@ export const Create = ({
             <div className="space-y flex flex-col">
               <label htmlFor="description" className="font-semibold">
                 Description
-              </label>
-              <textarea
+              </label> <textarea
                 id="description"
                 className="rounded-lg border-2 px-2 py-1"
               />
@@ -72,26 +84,29 @@ export const Create = ({
               </div>
 
               <div
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      {...getRootProps({
-        className:
-          'relative w-2/3 lg:w-1/2 h-72 border border-neutral-400 border-dashed rounded-md flex items-center justify-center cursor-pointer',
-      })}
-    >
-      <input
-        type="file"
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        {...getInputProps({ className: 'w-full h-full opacity-0 z-[100]', accept })}
-      />
-      <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
-        <BsUpload className="text-5xl opacity-60" />
-        <p className="text-xl lg:text-2xl opacity-60 w-4/5">
-          {isDragActive
-            ? 'release to drop the files here'
-            : 'drag and drop or click to upload your photo file here'}
-        </p>
-      </div>
-    </div>
+                /* eslint-disable-next-line react/jsx-props-no-spreading */
+                {...getRootProps({
+                  className:
+                    "relative w-2/3 lg:w-1/2 h-72 border border-neutral-400 border-dashed rounded-md flex items-center justify-center cursor-pointer",
+                })}
+              >
+                <input
+                  type="file"
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  {...getInputProps({
+                    className: "w-full h-full opacity-0 z-[100]",
+                    accept,
+                  })}
+                />
+                <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
+                  <BsUpload className="text-5xl opacity-60" />
+                  <p className="text-xl lg:text-2xl opacity-60 w-4/5">
+                    {isDragActive
+                      ? "release to drop the files here"
+                      : "drag and drop or click to upload your photo file here"}
+                  </p>
+                </div>
+              </div>
 
               <div className="flex flex-wrap gap-4">
                 <div className="relative">
@@ -107,6 +122,7 @@ export const Create = ({
               <button
                 type="button"
                 className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
+                onClick={() => handleSubmit()}
               >
                 Post
               </button>
@@ -115,12 +131,15 @@ export const Create = ({
         </div>
       ) : (
         <div className="text-center text-2xl textstyle items-center">
-          Please <a className="text-blue-700" href="/signin">sign</a> in to post.
+          Please{" "}
+          <a className="text-blue-700" href="/signin">
+            sign
+          </a>{" "}
+          in to post.
         </div>
       )}
     </div>
   );
 };
-
 
 export default Create;
