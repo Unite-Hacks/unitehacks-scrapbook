@@ -5,6 +5,16 @@ import { useDropzone, FileRejection, DropEvent, Accept } from "react-dropzone";
 import { File as Files} from "@prisma/client";
 import { useRouter } from "next/router";
 import { HiX } from "react-icons/hi";
+import ContributorCard from "../../components/ContributorCard";
+import { ProjectCard } from "../../components/PostCard";
+
+
+interface Contributor {
+  id: string;
+  name: string;
+  username: string;
+  image: string;
+}
 
 export const Create = ({
   onDrop,
@@ -23,6 +33,10 @@ export const Create = ({
     onDrop,
   });
   const [files, setFiles] = useState<Files[]>([]);
+  const [contributorSearch, setContributorSearch] = useState("");
+  const [contributorSearchError, setContributorSearchError] = useState("");
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [loadingContributor, setLoadingContributor] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -30,6 +44,52 @@ export const Create = ({
   const router = useRouter();
 
   const { data: session }: any = useSession();
+
+  const searchForUser = async () => {
+    setLoadingContributor(true);
+    if (contributorSearch.length === 0) {
+      setLoadingContributor(false);
+      return;
+    }
+    if (
+      contributors.find((c) => c.username === contributorSearch) ||
+      contributorSearch === session!.user?.username
+    ) {
+      setContributorSearch("");
+      setContributorSearchError("");
+      setLoadingContributor(false);
+      return;
+    }
+    const res = await fetch("/api/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: contributorSearch.trim() }),
+    });
+    if (!res.ok) {
+      if (res.status == 404) {
+        setContributorSearchError(
+          "User not found. Make sure you entered the username correctly."
+        );
+        setLoadingContributor(false);
+      } else {
+        setContributorSearchError("Something went wrong :(. Please try again.");
+        setLoadingContributor(false);
+      }
+    } else {
+      setContributorSearchError("");
+      const contributor = await res.json();
+      setContributors((cList) => [...cList, contributor]);
+      setContributorSearch("");
+      setLoadingContributor(false);
+    }
+  };
+
+  const removeContributor = (contributorId: string) => {
+    setContributors((cList) => cList.filter((c) => c.id !== contributorId));
+  };
+
 
  const createProject = async () => {
     if (
@@ -114,11 +174,43 @@ export const Create = ({
                   <input
                     id="contributors"
                     type="text"
+                    value={contributorSearch}
+                    disabled={loadingContributor}
+                    onChange={(e) => setContributorSearch(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        searchForUser();
+                      }
+                    }}
                     placeholder="Type a username here, then press enter."
                     className="w-full rounded-lg py-1 pl-4 pr-2"
                   />
                 </div>
+                {contributorSearchError.length > 0 ? (
+                <p className="mt-1 text-sm text-red-300">
+                  {contributorSearchError}
+                </p>
+              ) : null}
               </div>
+
+              <div className="space-y-4">
+
+                </div>
+                <ContributorCard
+                username={session!.user.username}
+                image={session!.user.avatar}
+                id={session!.user.id}
+              />
+               {contributors.map((contributor) => {
+                return (
+                  <ContributorCard
+                    {...contributor}
+                    key={contributor.id}
+                    onDelete={() => removeContributor(contributor.id)}
+                  />
+                );
+               })}
 
               <div
                 /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -216,6 +308,25 @@ export const Create = ({
                 Post
               </button>
             </div>
+            <div className="w-full max-w-md">
+          <ProjectCard
+            project={{
+              title: title.length > 0 ? title : "[Your title here!]",
+              description:
+                description.length > 0
+                  ? description
+                  : `Your description here!
+Markdown is supported.
+Use \`#\` to create headings, like so:
+# Heading 1
+You can also \\*\\***bold**\\*\\*, \\**italicize*\\*, and \\~\\~~~strikethrough~~\\~\\~ text.
+Add links like this: \\[[Unite Hacks Website](https://unitehacks.com)\\](https://unitehacks.com)
+`,
+              contributors: [session!.user, ...contributors],
+              files,
+            }}
+          />
+        </div>
           </div>
         </div>
       ) : (
