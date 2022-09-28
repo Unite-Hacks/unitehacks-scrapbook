@@ -308,25 +308,7 @@ export const Create = ({
                 Post
               </button>
             </div>
-            <div className="w-full max-w-md">
-          <ProjectCard
-            project={{
-              title: title.length > 0 ? title : "[Your title here!]",
-              description:
-                description.length > 0
-                  ? description
-                  : `Your description here!
-Markdown is supported.
-Use \`#\` to create headings, like so:
-# Heading 1
-You can also \\*\\***bold**\\*\\*, \\**italicize*\\*, and \\~\\~~~strikethrough~~\\~\\~ text.
-Add links like this: \\[[Unite Hacks Website](https://unitehacks.com)\\](https://unitehacks.com)
-`,
-              contributors: [session!.user, ...contributors],
-              files,
-            }}
-          />
-        </div>
+          
           </div>
         </div>
       ) : (
