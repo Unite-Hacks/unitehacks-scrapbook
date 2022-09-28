@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { BsUpload } from "react-icons/bs";
 import { useDropzone, FileRejection, DropEvent, Accept } from "react-dropzone";
+//import { File } from "@prisma/client";
+import { useRouter } from "next/router";
 
 export const Create = ({
   onDrop,
@@ -19,25 +21,45 @@ export const Create = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
-  // const [data, setData] = useState({
-  // title: "",
-  // contributors: "",
-  // etc according to your preference
-  // })
+  const [files, setFiles] = useState<File[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const { data: session }: any = useSession();
 
-  const handleSubmit = () => {
-    //TODO axios.post('/api/create', {
-    //  !req.body?.title ||
-    // !req.body?.description ||
-    // !req.body?.contributors ||
-    // !req.body?.files 
-    //})
-    //These fields are required. You can edit the api/create.ts to change field according to yourself
-    //Repeat same steps for delete and edit stuff 
-    console.log('yeah')
-  }
+ const createProject = async () => {
+    if (
+      title.trim().length === 0 ||
+      description.trim().length === 0 ||
+      files.length === 0 ||
+      uploadingImage ||
+      submitted 
+    ) {
+      return;
+    }
+    setSubmitted(true);
+    const res = await fetch("/api/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        files,
+      }),
+    });
+    if (!res.ok) {
+      alert("Something went wrong :(. Please try again.");
+      return;
+    }
+    router.push("/");
+  };
+
+
 
   return (
     <div className="px-4 pb-8">
@@ -56,6 +78,8 @@ export const Create = ({
                 type="text"
                 id="title"
                 className="rounded-lg border-2 px-2 py-1 "
+                value={title}
+              onChange={(e) => setTitle(e.target.value)}
               />
             </div>
 
@@ -65,6 +89,8 @@ export const Create = ({
               </label> <textarea
                 id="description"
                 className="rounded-lg border-2 px-2 py-1"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
 
@@ -97,6 +123,7 @@ export const Create = ({
                     className: "w-full h-full opacity-0 z-[100]",
                     accept,
                   })}
+                  
                 />
                 <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
                   <BsUpload className="text-5xl opacity-60" />
@@ -121,8 +148,18 @@ export const Create = ({
               </div>
               <button
                 type="button"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await createProject();
+                }}
                 className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
-                onClick={() => handleSubmit()}
+               disabled={
+                title.trim().length === 0 ||
+                description.trim().length === 0 ||
+                files.length === 0 ||
+                uploadingImage ||
+                submitted 
+              }
               >
                 Post
               </button>
