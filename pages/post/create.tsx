@@ -223,8 +223,9 @@ export const Create = ({
                 name="image"
                   type="file"
                     className="w-full h-full opacity-0 z-[100]"
-                    accept="image/png, image/jpeg, image/jpg"
+                    
             multiple
+            {...getInputProps({accept})}
             onChange={async (e) => {
               if (e.target.files) {
                 setUploadingImage(true);
