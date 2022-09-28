@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { BsUpload } from "react-icons/bs";
 import { useDropzone, FileRejection, DropEvent, Accept } from "react-dropzone";
-//import { File } from "@prisma/client";
+import { File as Files} from "@prisma/client";
 import { useRouter } from "next/router";
+import { HiX } from "react-icons/hi";
 
 export const Create = ({
   onDrop,
@@ -21,7 +22,7 @@ export const Create = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<Files[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -59,6 +60,16 @@ export const Create = ({
     router.push("/");
   };
 
+  const deleteFile = async (file: Files) => {
+    setFiles((files) => files.filter((f) => f.url !== file.url));
+    await fetch("/api/delete-file", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url: file.url }),
+    });
+  };
 
 
   return (
@@ -117,14 +128,55 @@ export const Create = ({
                 })}
               >
                 <input
+                name="image"
                   type="file"
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  {...getInputProps({
-                    className: "w-full h-full opacity-0 z-[100]",
-                    accept,
-                  })}
+                    className="w-full h-full opacity-0 z-[100]"
+                    accept="image/png, image/jpeg, image/jpg"
+            multiple
+            onChange={async (e) => {
+              if (e.target.files) {
+                setUploadingImage(true);
+                const fd = new FormData();
+                Array.from(e.target.files).forEach((file, i) => {
+                  fd.append(file.name, file);
+                });
+
+                const media = await fetch("/api/upload", {
+                  method: "POST",
+                  body: fd,
+                });
+
+                const newFiles = await media.json();
+                setFiles((f) => [...f, ...newFiles]);
+                e.target.value = "";
+                setUploadingImage(false);
+                // console.log(e.target.files);
+              }
+            }}
                   
                 />
+                {uploadingImage ? (
+            <p className="text-gray-300">Uploading image(s)...</p>
+          ) : null}
+           <div className="flex flex-wrap gap-4">
+            {files.map((file) => {
+              return (
+                <div key={file.url} className="relative">
+                  <button
+                    className="group absolute top-0 right-0 flex h-6 w-6 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100/40 duration-200 hover:bg-primary-200 hover:duration-100"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteFile(file);
+                    }}
+                  >
+                    <HiX className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
+                  </button>
+                  <img className="w-32" src={file.url} alt="uploaded image" />
+                </div>
+              );
+            })}
+          </div>
                 <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
                   <BsUpload className="text-5xl opacity-60" />
                   <p className="text-xl lg:text-2xl opacity-60 w-4/5">
