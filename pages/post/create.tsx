@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { BsUpload } from "react-icons/bs";
 import { useDropzone, FileRejection, DropEvent, Accept } from "react-dropzone";
-import { File as Files} from "@prisma/client";
+import { File as Files } from "@prisma/client";
 import { useRouter } from "next/router";
 import { HiX } from "react-icons/hi";
 import ContributorCard from "../../components/ContributorCard";
 import { ProjectCard } from "../../components/PostCard";
-
 
 interface Contributor {
   id: string;
@@ -90,14 +89,13 @@ export const Create = ({
     setContributors((cList) => cList.filter((c) => c.id !== contributorId));
   };
 
-
- const createProject = async () => {
+  const createProject = async () => {
     if (
       title.trim().length === 0 ||
       description.trim().length === 0 ||
       files.length === 0 ||
       uploadingImage ||
-      submitted 
+      submitted
     ) {
       return;
     }
@@ -131,7 +129,6 @@ export const Create = ({
     });
   };
 
-
   return (
     <div className="px-4 pb-8">
       {session ? (
@@ -150,14 +147,15 @@ export const Create = ({
                 id="title"
                 className="rounded-lg border-2 px-2 py-1 "
                 value={title}
-              onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
 
             <div className="space-y flex flex-col">
               <label htmlFor="description" className="font-semibold">
                 Description
-              </label> <textarea
+              </label>{" "}
+              <textarea
                 id="description"
                 className="rounded-lg border-2 px-2 py-1"
                 value={description}
@@ -188,21 +186,19 @@ export const Create = ({
                   />
                 </div>
                 {contributorSearchError.length > 0 ? (
-                <p className="mt-1 text-sm text-red-300">
-                  {contributorSearchError}
-                </p>
-              ) : null}
+                  <p className="mt-1 text-sm text-red-300">
+                    {contributorSearchError}
+                  </p>
+                ) : null}
               </div>
 
-              <div className="space-y-4">
-
-                </div>
-                <ContributorCard
+              <div className="space-y-4"></div>
+              <ContributorCard
                 username={session!.user.username}
                 image={session!.user.avatar}
                 id={session!.user.id}
               />
-               {contributors.map((contributor) => {
+              {contributors.map((contributor) => {
                 return (
                   <ContributorCard
                     {...contributor}
@@ -210,7 +206,7 @@ export const Create = ({
                     onDelete={() => removeContributor(contributor.id)}
                   />
                 );
-               })}
+              })}
 
               <div
                 /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -220,56 +216,59 @@ export const Create = ({
                 })}
               >
                 <input
-                name="image"
+                  name="image"
                   type="file"
-                    className="w-full h-full opacity-0 z-[100]"
-                    
-            multiple
-            {...getInputProps({accept})}
-            onChange={async (e) => {
-              if (e.target.files) {
-                setUploadingImage(true);
-                const fd = new FormData();
-                Array.from(e.target.files).forEach((file, i) => {
-                  fd.append(file.name, file);
-                });
+                  className="w-full h-full opacity-0 z-[100]"
+                  accept="image/png, image/jpeg, image/jpg"
+                  multiple
+                  {...getInputProps}
+                  onChange={async (e) => {
+                    if (e.target.files) {
+                      setUploadingImage(true);
+                      const fd = new FormData();
+                      Array.from(e.target.files).forEach((file, i) => {
+                        fd.append(file.name, file);
+                      });
 
-                const media = await fetch("/api/upload", {
-                  method: "POST",
-                  body: fd,
-                });
+                      const media = await fetch("/api/upload", {
+                        method: "POST",
+                        body: fd,
+                      });
 
-                const newFiles = await media.json();
-                setFiles((f) => [...f, ...newFiles]);
-                e.target.value = "";
-                setUploadingImage(false);
-                // console.log(e.target.files);
-              }
-            }}
-                  
+                      const newFiles = await media.json();
+                      setFiles((f) => [...f, ...newFiles]);
+                      e.target.value = "";
+                      setUploadingImage(false);
+                      // console.log(e.target.files);
+                    }
+                  }}
                 />
                 {uploadingImage ? (
-            <p className="text-gray-300">Uploading image(s)...</p>
-          ) : null}
-           <div className="flex flex-wrap gap-4">
-            {files.map((file) => {
-              return (
-                <div key={file.url} className="relative">
-                  <button
-                    className="group absolute top-0 right-0 flex h-6 w-6 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100/40 duration-200 hover:bg-primary-200 hover:duration-100"
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deleteFile(file);
-                    }}
-                  >
-                    <HiX className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
-                  </button>
-                  <img className="w-32" src={file.url} alt="uploaded image" />
+                  <p className="text-gray-300">Uploading image(s)...</p>
+                ) : null}
+                <div className="flex flex-wrap gap-4">
+                  {files.map((file) => {
+                    return (
+                      <div key={file.url} className="relative">
+                        <button
+                          className="group absolute top-0 right-0 flex h-6 w-6 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100/40 duration-200 hover:bg-primary-200 hover:duration-100"
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            deleteFile(file);
+                          }}
+                        >
+                          <HiX className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
+                        </button>
+                        <img
+                          className="w-full"
+                          src={file.url}
+                          alt="uploaded image"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
                 <div className="absolute w-full flex flex-col gap-y-6 items-center justify-center text-center">
                   <BsUpload className="text-5xl opacity-60" />
                   <p className="text-xl lg:text-2xl opacity-60 w-4/5">
@@ -298,18 +297,17 @@ export const Create = ({
                   await createProject();
                 }}
                 className="rounded-md bg-blue-700 px-4 py-1.5 text-white duration-300 hover:duration-100 enabled:hover:bg-primary-200 disabled:cursor-not-allowed disabled:saturate-50"
-               disabled={
-                title.trim().length === 0 ||
-                description.trim().length === 0 ||
-                files.length === 0 ||
-                uploadingImage ||
-                submitted 
-              }
+                disabled={
+                  title.trim().length === 0 ||
+                  description.trim().length === 0 ||
+                  files.length === 0 ||
+                  uploadingImage ||
+                  submitted
+                }
               >
                 Post
               </button>
             </div>
-          
           </div>
         </div>
       ) : (
