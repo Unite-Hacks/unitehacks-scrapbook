@@ -192,21 +192,6 @@ export const Create = ({
                 ) : null}
               </div>
 
-              <div className="space-y-4"></div>
-              <ContributorCard
-                username={session!.user.username}
-                image={session!.user.avatar}
-                id={session!.user.id}
-              />
-              {contributors.map((contributor) => {
-                return (
-                  <ContributorCard
-                    {...contributor}
-                    key={contributor.id}
-                    onDelete={() => removeContributor(contributor.id)}
-                  />
-                );
-              })}
 
               <div
                 /* eslint-disable-next-line react/jsx-props-no-spreading */
