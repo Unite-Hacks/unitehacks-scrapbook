@@ -261,7 +261,7 @@ export const Create = ({
                           <HiX className="text-white duration-200 group-hover:text-primary-800 group-hover:duration-100" />
                         </button>
                         <img
-                          className="w-full"
+                          className="w-32"
                           src={file.url}
                           alt="uploaded image"
                         />
