@@ -120,7 +120,7 @@ export const Create = ({
 
   const deleteFile = async (file: Files) => {
     setFiles((files) => files.filter((f) => f.url !== file.url));
-    await fetch("/api/delete-file", {
+    await fetch("/api/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -168,7 +168,7 @@ export const Create = ({
                 <label htmlFor="contributors" className="font-semibold">
                   Teammate
                 </label>
-                <div className="relative h-full before:absolute before:left-2 before:top-1 before:content-['@']">
+                <div className="relative h-full before:absolute before:left-2 before:top-1">
                   <input
                     id="contributors"
                     type="text"
