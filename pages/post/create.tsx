@@ -287,8 +287,9 @@ export const Create = ({
                   title.trim().length === 0 ||
                   description.trim().length === 0 ||
                   files.length === 0 ||
+                  loadingContributor ||
                   uploadingImage ||
-                  submitted
+                  submitted 
                 }
               >
                 Post
