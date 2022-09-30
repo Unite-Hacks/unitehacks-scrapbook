@@ -25,7 +25,7 @@ const ViewProject = ({ project }: { project: ProjectCardType }) => {
       <div className="flex flex-col space-y-6  md:justify-between md:space-y-4">
         <div className="w-full space-y-2 rounded-lg border-4 border-gray-500 bg-gray-700 p-4 ">
           <h3 className="text-md font-semibold">
-            Contributors
+            Teammates
           </h3>
           <div className="space-y-2">
             {project.contributors.map((contributor, i) => {
