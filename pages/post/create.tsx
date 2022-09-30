@@ -108,7 +108,7 @@ export const Create = ({
       body: JSON.stringify({
         title,
         description,
-        //contributors: contributors.map((c) => c.id),
+        contributors: contributors.map((c) => c.id),
         files,
       }),
     });
