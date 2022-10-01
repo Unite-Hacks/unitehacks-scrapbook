@@ -18,20 +18,7 @@ export default async function handler(
     return;
   }
 
-  if (
-    !req.body?.title ||
-    !req.body?.description ||
-    !req.body?.contributors ||
-    !req.body?.files 
-  ) {
-    res.status(400).send("Missing required fields");
-    return;
-  }
 
-  if (req.body.files.length == 0) {
-    res.status(400).send("Files must not be empty");
-    return;
-  }
 
   const { title, description, contributors, files } = req.body;
 
