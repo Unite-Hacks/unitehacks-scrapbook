@@ -5,11 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body,
+html,
+#root{
   background: linear-gradient(144.89deg, rgba(114, 186, 88, 0.8) 20.64%, rgba(91, 185, 239, 0.8) 90.74%);
   background-repeat: no-repeat;
   background-size: contain;
-  height: 100vh;
+  height: 100%;
 }
 
 .textstyle{
