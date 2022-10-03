@@ -17,13 +17,7 @@ export const authOptions: NextAuthOptions ={
     }),
   ],
 
-  callbacks: {
-    async session({ session, token, user }) {
-      session.user.id = user.id;
-      session.user.username = user.username as string;
-      return session;
-    },
-  },
+ 
   events: {
     async createUser({ user }) {
       let username;
