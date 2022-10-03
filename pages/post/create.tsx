@@ -164,7 +164,8 @@ export const Create = ({
               />
             </div>
 
-            <div className="space-y-4">
+          <div className="space-y-4">
+              {/*
               <div className="space-y flex flex-col">
                 <label htmlFor="contributors" className="font-semibold">
                   Teammate
@@ -192,8 +193,8 @@ export const Create = ({
                   </p>
                 ) : null}
               </div>
-
-
+               
+ */}
               <div
                 /* eslint-disable-next-line react/jsx-props-no-spreading */
                 {...getRootProps({
