@@ -174,14 +174,6 @@ export const Create = ({
                     id="contributors"
                     type="text"
                     value={contributorSearch}
-                    disabled={loadingContributor}
-                    onChange={(e) => setContributorSearch(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        searchForUser();
-                      }
-                    }}
                     placeholder="Type a username here, then press enter."
                     className="w-full rounded-lg py-1 pl-4 pr-2"
                   />
