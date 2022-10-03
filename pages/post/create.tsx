@@ -225,7 +225,7 @@ export const Create = ({
                       setFiles((f) => [...f, ...newFiles]);
                       e.target.value = "";
                       setUploadingImage(false);
-                      // console.log(e.target.files);
+                     console.log(e.target.files);
                     }
                   }}
                 />
