@@ -21,8 +21,8 @@ export default async function handler(
   if (
     !req.body?.title ||
     !req.body?.description ||
-    !req.body?.contributors ||
-    !req.body?.files 
+    //!req.body?.contributors ||
+    !req.body?.files
   ) {
     res.status(400).send("Missing required fields");
     return;
@@ -33,19 +33,13 @@ export default async function handler(
     return;
   }
 
-  const { title, description, contributors, files } = req.body;
+  const { title, description, files } = req.body;
 
   try {
     await prisma.project.create({
       data: {
         title,
         description,
-        contributors: {
-          connect: [
-            { id: session.user.id },
-            ...contributors.map((c: string) => ({ id: c })),
-          ],
-        },
         files: {
           create: files.map((file: File) => ({
             url: file.url,
