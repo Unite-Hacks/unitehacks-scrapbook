@@ -49,7 +49,14 @@ export default function Home({ projects }: { projects: ProjectCardType[] }) {
 export async function getServerSideProps() {
   let projects = await prisma.project.findMany({
     include: {
-    
+      contributors: {
+        select: {
+          name: true,
+          username: true,
+          avatar: true,
+          id: true,
+        },
+      },
       files: true,
     },
     orderBy: {
