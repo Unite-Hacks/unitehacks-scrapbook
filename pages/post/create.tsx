@@ -99,6 +99,7 @@ export const Create = ({
     ) {
       return;
     }
+    console.log(submitted)
     setSubmitted(true);
     const res = await fetch("/api/create", {
       method: "POST",
@@ -225,7 +226,7 @@ export const Create = ({
                       setFiles((f) => [...f, ...newFiles]);
                       e.target.value = "";
                       setUploadingImage(false);
-                     console.log(e.target.files);
+                    // console.log(e.target.files);
                     }
                   }}
                 />
