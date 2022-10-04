@@ -99,7 +99,11 @@ export const Create = ({
     ) {
       return;
     }
-    console.log(submitted)
+    console.log(files)
+    console.log(contributors)
+    console.log(title)
+    console.log(description)
+    console.log(uploadingImage)
     setSubmitted(true);
     const res = await fetch("/api/create", {
       method: "POST",
