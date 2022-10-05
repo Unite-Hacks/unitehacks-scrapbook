@@ -55,7 +55,7 @@ export const ProjectCard = ({
 
               <div className="absolute translate-y-[0.5rem] -translate-x-[calc(50%-1rem)] rounded-md px-2 font-semibold opacity-0 transition ease-in-out peer-hover:opacity-100 dark:bg-[#4E4C59]">
                 <div className="absolute left-1/2 -z-10 -translate-y-2 -translate-x-[29%] -rotate-180">
-                  <div className="h-3 w-3 origin-top-left -rotate-45 transform dark:bg-[#4E4C59]"></div>
+                  <div className="h-3 w-3 origin-top-left -rotate-45 transform dark:bg-white"></div>
                 </div>
                 @{contributor.username}
               </div>
