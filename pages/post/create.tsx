@@ -136,7 +136,7 @@ export const Create = ({
   };
 
   return (
-    <div className="px-4 pb-8">
+    <div className="px-4 pb-8 mb-20">
       {session ? (
         <div className="mx-auto flex max-w-7xl flex-col gap-x-8 gap-y-10 lg:flex-row">
           <div className="flex-grow space-y-8">

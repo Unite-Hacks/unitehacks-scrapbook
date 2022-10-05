@@ -5,13 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body,
-html,
-#root{
-  background: linear-gradient(144.89deg, rgba(114, 186, 88, 0.8) 20.64%, rgba(91, 185, 239, 0.8) 90.74%);
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 100%;
+body{
+  background: linear-gradient(144.89deg, rgba(114, 186, 88, 0.8) 20.64%, rgba(91, 185, 239, 0.8) 90.74%) fixed; 
+  
 }
 
 .textstyle{
