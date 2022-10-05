@@ -18,7 +18,7 @@ export const ProjectCard = ({
 }) => {
   return (
     <div
-      className="relative mb-4 w-full space-y-4 rounded-lg">
+      className="relative mb-4 space-y-4  bg-white rounded-lg md:mr-[300px] md:ml-[300px]">
       {"id" in project ? (
         <Link href={`/post/view/${project.id}`}>
           <a className="mx-auto !mt-0 block w-fit">
