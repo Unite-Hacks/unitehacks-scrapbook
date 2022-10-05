@@ -14,6 +14,7 @@ export type ProjectCardType = Project & {
 export default function Home({ projects }: { projects: ProjectCardType[] }) {
   return (
     <>
+ 
       <div className="px-4">
         <div className="mx-auto max-w-md sm:max-w-7xl">
           <h1 className="text-center text-3xl  textstyle">
@@ -42,6 +43,8 @@ export default function Home({ projects }: { projects: ProjectCardType[] }) {
         )}
         </div>
       </div>
+      
+      
     </>
   );
 };
