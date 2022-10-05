@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo";
 const title = "Unite Hacks Scrapbook";
 const description =
-  "Check out what everyone is building at Leland Hacks!";
+  "Check out what everyone is building at Unite Hacks!";
 const url = "https://scrapbook.unitehacks.com";
 const Meta = () => {
   return (
