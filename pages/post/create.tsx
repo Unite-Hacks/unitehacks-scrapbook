@@ -210,7 +210,8 @@ export const Create = ({
                   name="image"
                   type="file"
                   className="w-full h-full opacity-0 z-[100]"
-                  accept="image/png, image/jpeg, image/jpg, video/mp4"
+                   accept="image/*, video*/"
+                  accept="image/png, image/jpeg, image/jpg"
                   multiple
                   {...getInputProps}
                   onChange={async (e) => {
