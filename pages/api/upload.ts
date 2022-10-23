@@ -63,7 +63,7 @@ export default async function handler(
         if (!error) {
           media.push({
             url: result.url,
-            mediaType: result.resource_type auto,
+            mediaType: result.resource_type => "auto",
             width: result.width,
             height: result.height,
           });
